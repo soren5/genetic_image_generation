@@ -15,8 +15,6 @@ def get_fitness(** kwargs):
     y_size = kwargs.get('y_size')
     current_individual = kwargs.get('current_individual')
     current_generation = kwargs.get('current_generation')
-    if x_size != 255:
-        print('a')
     tf.reset_default_graph()
     config = tf.ConfigProto(allow_soft_placement=True)
     config.gpu_options.allow_growth = True

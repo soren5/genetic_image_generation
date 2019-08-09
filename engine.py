@@ -90,9 +90,11 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
             writer = csv.writer(writeFile)
             writer.writerows(lines)
         lines = []
+    return True
     
-random.seed(0)
-engine(10, 10, 3, 0.2, 0.9, 0, [255,253])
+if __name__ == "__main__":
+    random.seed(0)
+    engine(10, 10, 3, 0.2, 0.9, 0, [255,255])
 """
 if len(sys.argv) == 1:
     random.seed(0)
