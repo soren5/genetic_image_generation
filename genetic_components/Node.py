@@ -26,8 +26,8 @@ class Node:
             if self.value == '-':
                 return tf.math.subtract(self.children[0].get_tensor(x_size, y_size), self.children[1].get_tensor(x_size, y_size))
             if self.value == '/':
-                left_child_tensor = self.children[0].get_tensor(x_size, y_size)
-                right_child_tensor = self.children[1].get_tensor(x_size, y_size)
+                left_child_tensor = tf.cast(self.children[0].get_tensor(x_size, y_size), tf.float32)
+                right_child_tensor = tf.cast(self.children[1].get_tensor(x_size, y_size), tf.float32)
                 return tf.cast(tf.math.divide_no_nan(left_child_tensor, right_child_tensor), tf.int32)
             if self.value == '*':
                 return tf.math.multiply(self.children[0].get_tensor(x_size, y_size), self.children[1].get_tensor(x_size, y_size))
