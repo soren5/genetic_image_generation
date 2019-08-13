@@ -3,6 +3,7 @@ import datetime
 import math
 import random
 import sys
+import argparse
 from collections import Counter
 
 import numpy as np
@@ -12,7 +13,7 @@ from genetic_components.genetic_operators import (crossover, gen_rnd_expr,
                                                   tournament_selection)
 
 experiment_time = datetime.datetime.now()
-function_set = {'+', '-', '*', '/', '^',}
+function_set = {'+', '-', '*', '/', '^', 'and', 'or', 'invert', 'cos', 'sin', 'tan'}
 terminal_set = set() 
 
 for i in range(255):
@@ -40,7 +41,7 @@ def initialize_population(population_size, image_size):
     return population
 
 
-def engine(population_size, generation_number, tournament_size, mutation_rate, crossover_rate, seed, image_size):
+def engine(population_size, generation_number, tournament_size, mutation_rate, crossover_rate, image_size, seed):
     lines = []
     lines.append(['seed', 'gen_number', 'best_fitness', 'best_individual', 'biggest_tree_depth', 'best_red', 'best_green', 'best_blue', 'best_alpha'])
     population = initialize_population(population_size, image_size)
@@ -92,22 +93,42 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
         lines = []
     return True
     
+def main():
+    """ Main function worker """
+    parser = argparse.ArgumentParser(
+        description="Evolutionary Algorithm for Image Generation")
+    parser.add_argument(
+        dest="population_size",
+        )
+    parser.add_argument(
+        dest="generation_number",
+        )
+    parser.add_argument(
+        dest="tournament_size")
+    parser.add_argument(
+        dest="mutation_rate")
+    parser.add_argument(
+        dest="crossover_rate")
+    parser.add_argument(
+        help="Example of the expected format 256x256",
+        dest="image_size")
+    parser.add_argument(
+        dest="seed")
+
+    args = parser.parse_args()
+
+    random.seed(int(args.seed))
+    image_resolution = args.image_size.split('x')
+    engine(
+        int(args.population_size),
+        int(args.generation_number),
+        int(args.tournament_size),
+        float(args.mutation_rate),
+        float(args.crossover_rate),
+        [int(image_resolution[0]), int(image_resolution[1])],
+        int(args.seed)
+    )
+
 if __name__ == "__main__":
-    random.seed(0)
-    engine(10, 10, 3, 0.2, 0.9, 0, [255,255])
-"""
-if len(sys.argv) == 1:
-    random.seed(0)
-    engine(100, 100, 2, 0.03, 0.9, 'keras', 0)
-else:
-    if sys.argv[1] == 'auto':
-        random.seed(0)
-        engine(int(sys.argv[2]), int(sys.argv[3]), 2, 0.03, 0.9, 0)
-    else:
-        min_seed = input()
-        max_seed = input()
-        for seed in range(int(min_seed), int(max_seed)):
-            random.seed(seed)
-            engine(int(sys.argv[1]), int(sys.argv[2]), 2, 0.03, 0.9, seed)
-#jingle()
-"""
+    engine(5, 5, 3, 0.2, 0.9, [255,255], 0)
+    main()
