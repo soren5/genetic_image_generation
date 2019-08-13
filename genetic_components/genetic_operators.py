@@ -4,7 +4,8 @@ from collections import Counter
 import copy
 from .node import Node
 
-
+special_case_3_child = {'if'}
+special_case_1_child = {'cos', 'sin', 'tan', 'invert'}
 def crossover(parent_1, parent_2):
     crossover_node = None
     if random.random() < 0.9:
@@ -71,19 +72,29 @@ def gen_rnd_expr(function_set, terminal_set, max_depth, method):
     if method == 'ramped half-and-half':
         children = [gen_rnd_expr(function_set, terminal_set, max_depth - 1, 'grow'), gen_rnd_expr(function_set, terminal_set, max_depth - 1, 'full')]
         value = random.sample(function_set, 1)[0]
-        if value == 'if':
+        #Special case for operators with 3 children
+        if value in special_case_3_child:
             children.append(gen_rnd_expr(function_set, terminal_set, max_depth - 1, 'grow'))
-        node = Node(value=value,
-        terminal=False,
-        children=children)
+        #Special case for operators with 1 child
+        if value in special_case_1_child:
+            children = [children[0]]
+        node = Node(
+            value=value,
+            terminal=False,
+            children=children)
         return node 
     if max_depth == 0 or (method == 'grow' and random.random() < (len(terminal_set) / (len(terminal_set) + len(function_set)))):
         return Node(value=random.sample(terminal_set, 1)[0], terminal=True, children=[])        
     else:
         children = [gen_rnd_expr(function_set, terminal_set, max_depth - 1, method), gen_rnd_expr(function_set, terminal_set, max_depth - 1, method)]
         value = random.sample(function_set, 1)[0]
-        if value == 'if':
-            children.append(gen_rnd_expr(function_set, terminal_set, max_depth - 1, method))
+        #Special case for operators with 3 children
+        if value in special_case_3_child:
+            children.append(gen_rnd_expr(function_set, terminal_set, max_depth - 1, 'grow'))
+        #Special case for operators with 1 child
+        if value in special_case_1_child:
+            children = [children[0]]
+
         node = Node(value=value,
         terminal=False,
         children=children)
