@@ -28,7 +28,8 @@ def get_fitness(** kwargs):
             green_result = sess.run(green_tensor)
             blue_result = sess.run(blue_tensor)
             alpha_result = sess.run(alpha_tensor)
-            result = np.stack((red_result, green_result, blue_result, alpha_result), axis=2)
+            auxiliary_array = [red_result, green_result, blue_result, alpha_result]
+            result = np.stack(auxiliary_array, axis=2)
             matplotlib.pyplot.imsave('generated_images/' + str(current_generation) + '_' + str(current_individual) + '_generated_image.png', result)
     image_size = os.path.getsize('generated_images/' + str(current_generation) + '_' + str(current_individual) + '_generated_image.png')
     return -image_size
