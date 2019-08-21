@@ -13,11 +13,37 @@ from genetic_components.genetic_operators import (crossover, gen_rnd_expr,
                                                   tournament_selection)
 
 experiment_time = datetime.datetime.now()
-function_set = {'+', '-', '*', '/', '^', 'and', 'or', 'invert', 'cos', 'sin', 'tan'}
+function_set = {
+    'abs',
+    'add',
+    'and', 
+    'cos', 
+    'div', 
+    'exp', 
+    'if',
+    'log',
+    'max',
+    'mdist',
+    'min',
+    'mod',
+    'mult',
+    'neg',
+    'or',
+    'pow',
+    'scalarT',
+    'scalarV',
+    'sign',
+    'sin',
+    'sqrt',
+    'sub',
+    'tan',
+    'warp',
+    'xor',
+}
 terminal_set = set() 
 
 for i in range(255):
-    terminal_set.add(i)
+    #terminal_set.add(i)
     terminal_set.add('x')
     terminal_set.add('y')
 
@@ -130,5 +156,5 @@ def main():
     )
 
 if __name__ == "__main__":
-    engine(5, 5, 3, 0.2, 0.9, [255,255], 0)
-    main()
+    engine(100, 100, 3, 0.2, 0.9, [20,20], 0)
+    #main()

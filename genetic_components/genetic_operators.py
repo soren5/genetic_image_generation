@@ -5,7 +5,7 @@ import copy
 from .node import Node
 
 special_case_3_child = {'if'}
-special_case_1_child = {'cos', 'sin', 'tan', 'invert'}
+special_case_1_child = {'abs', 'cos', 'sin', 'tan', 'neg', 'exp', 'log', 'sign'}
 def crossover(parent_1, parent_2):
     crossover_node = None
     if random.random() < 0.9:
