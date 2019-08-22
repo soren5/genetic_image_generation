@@ -154,8 +154,8 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
             print("Saved state!")
     return True
     
-def main():
-    image = imageio.imread('/Users/soren/Work/Research/genetic_image_generation/image.jpg')
+def main(image_path):
+    image = imageio.imread(image_path)
     image_array = np.asarray(image)
     engine(100, math.inf, 3, 0.2, 0.9, [256,256], 0, image_array)
 
