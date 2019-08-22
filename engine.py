@@ -49,7 +49,7 @@ for i in range(255):
     terminal_set.add('x')
     terminal_set.add('y')
 
-def initialize_population(population_size, image_size, image_to_fit):
+def initialize_population(population_size, fitness_func, image_size, image_to_fit):
     population = []
     for individual in range(population_size):
         depth_check = 0
@@ -91,7 +91,7 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
     else:
         fitness_func = get_image_fitness
     if resume_file == None:
-        population = initialize_population(population_size, image_size, image_to_fit)
+        population = initialize_population(population_size, fitness_func, image_size, image_to_fit)
     else:
         with open(resume_file, 'rb') as dump_file:
             engine_state = pickle.load(dump_file)
