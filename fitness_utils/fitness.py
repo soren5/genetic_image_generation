@@ -1,8 +1,5 @@
 import os
 
-import matplotlib
-matplotlib.use("TkAgg")
-import matplotlib.pyplot
 import numpy as np
 import tensorflow as tf
 import imageio
