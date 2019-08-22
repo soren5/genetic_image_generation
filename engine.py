@@ -9,7 +9,7 @@ import imageio
 import pickle
 
 import numpy as np
-from fitness_utils.fitness import get_image_fitness as get_fitness
+from fitness_utils.fitness import get_fitness, get_image_fitness
 from genetic_components.genetic_operators import (crossover, gen_rnd_expr,
                                                   mutation,
                                                   tournament_selection)
@@ -85,6 +85,8 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
     lines = []
     lines.append(['seed', 'gen_number', 'best_fitness', 'best_individual', 'biggest_tree_depth', 'best_red', 'best_green', 'best_blue', 'best_alpha'])
     current_generation = 0
+    if image_to_fit != None:
+        get_fitness = get_image_fitness
     if resume_file == None:
         population = initialize_population(population_size, image_size, image_to_fit)
     else:
