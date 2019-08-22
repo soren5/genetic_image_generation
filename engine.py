@@ -65,7 +65,7 @@ def initialize_population(population_size, image_size, image_to_fit):
         green_tree = channel_trees[1]
         blue_tree = channel_trees[2]
         alpha_tree = channel_trees[3]
-        population.append({'channel_trees': channel_trees, 'fitness': get_fitness(x_size=image_size[0], y_size=image_size[1], red_tree=red_tree,green_tree=green_tree, blue_tree=blue_tree, alpha_tree=alpha_tree, current_individual=individual, current_generation=-1, image_to_fit=image_to_fit)})
+        population.append({'channel_trees': channel_trees, 'fitness': fitness_func(x_size=image_size[0], y_size=image_size[1], red_tree=red_tree,green_tree=green_tree, blue_tree=blue_tree, alpha_tree=alpha_tree, current_individual=individual, current_generation=-1, image_to_fit=image_to_fit)})
     return population
 
 
@@ -82,13 +82,14 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
         'population': [],
         'current_generation': 0,
     }
+    fitness_func = None
     lines = []
     lines.append(['seed', 'gen_number', 'best_fitness', 'best_individual', 'biggest_tree_depth', 'best_red', 'best_green', 'best_blue', 'best_alpha'])
     current_generation = 0
     if image_to_fit is None:
-        pass
+        fitness_func = get_fitness
     else:
-        get_fitness = get_image_fitness
+        fitness_func = get_image_fitness
     if resume_file == None:
         population = initialize_population(population_size, image_size, image_to_fit)
     else:
@@ -132,7 +133,7 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
                     if member_depth > max_child_depth:
                         max_child_depth = member_depth 
                 new_member = {}
-                new_member = {'channel_trees': child, 'fitness': get_fitness(red_tree=child[0],green_tree=child[1], blue_tree=child[2], alpha_tree=child[3], current_individual=current_individual, current_generation=current_generation, x_size= image_size[0], y_size= image_size[1], best_fit=best['fitness'], image_to_fit=image_to_fit), 'depth': max_child_depth}
+                new_member = {'channel_trees': child, 'fitness': fitness_func(red_tree=child[0],green_tree=child[1], blue_tree=child[2], alpha_tree=child[3], current_individual=current_individual, current_generation=current_generation, x_size= image_size[0], y_size= image_size[1], best_fit=best['fitness'], image_to_fit=image_to_fit), 'depth': max_child_depth}
                 if new_member['fitness'] < best['fitness']:
                     best = new_member
                     best['result'] = individual_result
