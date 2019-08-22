@@ -152,7 +152,8 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
                 writer.writerows(lines)
             lines = []
             current_generation += 1
-    except:
+    except Exception as e:
+        print('Exception: '+ str(e))
         #with open('dumps/' + str(experiment_time) + '_dumps', 'ab') as dump_file:
         with open('dumps/latest_dump', 'ab') as dump_file:
             pickle.dump(engine_state, dump_file)
