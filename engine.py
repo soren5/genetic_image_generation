@@ -148,7 +148,7 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
             print("BEST STRINGS: \n\t" + best['channel_trees'][0].get_string() + '\n\t' + best['channel_trees'][1].get_string() + '\n\t' + best['channel_trees'][2].get_string() + '\n\t' + best['channel_trees'][3].get_string())
             population = new_population
             with open('logs/' + str(experiment_time) + '_fitness_results.csv', 'a') as writeFile:
-                writer = cv.writer(writeFile)
+                writer = csv.writer(writeFile)
                 writer.writerows(lines)
             lines = []
             current_generation += 1
