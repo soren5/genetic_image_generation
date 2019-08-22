@@ -9,7 +9,7 @@ import imageio
 import pickle
 
 import numpy as np
-from fitness_utils.fitness import get_fitness
+from fitness_utils.fitness import get_image_fitness as get_fitness
 from genetic_components.genetic_operators import (crossover, gen_rnd_expr,
                                                   mutation,
                                                   tournament_selection)
