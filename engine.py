@@ -85,7 +85,9 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
     lines = []
     lines.append(['seed', 'gen_number', 'best_fitness', 'best_individual', 'biggest_tree_depth', 'best_red', 'best_green', 'best_blue', 'best_alpha'])
     current_generation = 0
-    if image_to_fit != None:
+    if image_to_fit is None:
+        pass
+    else:
         get_fitness = get_image_fitness
     if resume_file == None:
         population = initialize_population(population_size, image_size, image_to_fit)
