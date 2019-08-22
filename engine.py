@@ -155,6 +155,11 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
     return True
     
 def main():
+    image = imageio.imread('/Users/soren/Work/Research/genetic_image_generation/image.jpg')
+    image_array = np.asarray(image)
+    engine(100, math.inf, 3, 0.2, 0.9, [256,256], 0, image_array)
+
+if __name__ == "__main__":
     """ Main function worker """
     parser = argparse.ArgumentParser(
         description="Evolutionary Algorithm for Image Generation")
@@ -189,9 +194,3 @@ def main():
         [int(image_resolution[0]), int(image_resolution[1])],
         int(args.seed)
     )
-
-if __name__ == "__main__":
-    #image = imageio.imread('/Users/soren/Work/Research/genetic_image_generation/image.jpg')
-    #image_array = np.asarray(image)
-    #engine(100, math.inf, 3, 0.2, 0.9, [256,256], 0, image_array)
-    main()
