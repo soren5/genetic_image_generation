@@ -80,12 +80,12 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
         'seed': seed,
         'image_to_fit': image_to_fit,
         'population': [],
-        'current_generation': 0,
+        'current_generation': 1,
     }
     fitness_func = None
     lines = []
     lines.append(['seed', 'gen_number', 'best_fitness', 'best_individual', 'biggest_tree_depth', 'best_red', 'best_green', 'best_blue', 'best_alpha'])
-    current_generation = 0
+    current_generation = 1
     if image_to_fit is None:
         fitness_func = get_fitness
     else:
@@ -107,7 +107,7 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
             new_population.append(best)
             max_tree_depth = 0
             if current_generation % 100 == 0:
-                immigrants = initialize_population(population_size, image_size, image_to_fit)
+                immigrants = initialize_population(population_size, fitness_func, image_size, image_to_fit)
                 population.extend(immigrants)
                 foo = random.sample(population, population_size)
                 population = foo
