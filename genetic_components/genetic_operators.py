@@ -5,7 +5,7 @@ import copy
 from .node import Node
 
 special_case_3_child = {'if'}
-special_case_1_child = {'abs', 'cos', 'sin', 'tan', 'neg', 'exp', 'log', 'sign'}
+special_case_1_child = {'abs', 'cos', 'sin', 'tan', 'neg', 'exp', 'log', 'sign', 'scalarT', 'scalarV'}
 def crossover(parent_1, parent_2):
     crossover_node = None
     if random.random() < 0.9:
@@ -77,6 +77,11 @@ def gen_rnd_expr(function_set, terminal_set, max_depth, method):
             children.append(gen_rnd_expr(function_set, terminal_set, max_depth - 1, 'grow'))
         #Special case for operators with 1 child
         if value in special_case_1_child:
+            if value == 'scalarV' or value == 'scalarT':
+                foo = Node(value=random.randint(0,255),
+                    terminal=True,
+                    children=[])
+                children[0] = foo
             children = [children[0]]
         node = Node(
             value=value,
@@ -93,8 +98,12 @@ def gen_rnd_expr(function_set, terminal_set, max_depth, method):
             children.append(gen_rnd_expr(function_set, terminal_set, max_depth - 1, 'grow'))
         #Special case for operators with 1 child
         if value in special_case_1_child:
+            if value == 'scalarV' or value == 'scalarT':
+                foo = Node(value=random.randint(0,255),
+                    terminal=True,
+                    children=[])
+                children[0] = foo
             children = [children[0]]
-
         node = Node(value=value,
         terminal=False,
         children=children)

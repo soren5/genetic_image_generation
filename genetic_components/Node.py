@@ -1,6 +1,6 @@
 import tensorflow as tf
 special_case_3_child = {'if'}
-special_case_1_child = {'abs', 'cos', 'sin', 'tan', 'neg', 'exp', 'log', 'sign'}
+special_case_1_child = {'abs', 'cos', 'sin', 'tan', 'neg', 'exp', 'log', 'sign', 'scalarT', 'scalarV'}
 
 def resolve_x_node(x_size, y_size):
     x_size_tensor = tf.range(x_size)
@@ -16,9 +16,8 @@ def resolve_y_node(x_size, y_size):
     y_size_tensor = tf.cast(y_size_tensor, tf.float32)
     return y_size_tensor 
 
-def resolve_constant_node(x_size, y_size):
-    terminal_tensor = tf.fill([x_size,y_size], self.value)
-    terminal_tensor = tf.cast(terminal_tensor, tf.float32)
+def resolve_constant_node(value, x_size, y_size):
+    terminal_tensor = tf.constant(value, tf.float32, [x_size, y_size])
     return terminal_tensor
 
 def resolve_abs_node(child1):
@@ -125,7 +124,7 @@ class Node:
             elif self.value == 'y':
                 return resolve_y_node(x_size, y_size)
             else:
-                return resolve_constant_node(x_size, y_size)
+                return resolve_constant_node(self.value, x_size, y_size)
         else:
             child1 = None
             child2 = None
