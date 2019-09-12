@@ -4,8 +4,9 @@ def get_face_fitness(image):
     cascade = cv2.CascadeClassifier()
     model_path = os.path.join(os.getcwd(), 'fitness_utils/model.xml')
     print(model_path)
-    cascade.load(model_path)
-    faces, lvls , ws = cascade.detectMultiScale3(image,1.2, 3, outputRejectLevels=True)
+    #cascade.load(model_path)
+    #faces, lvls , ws = cascade.detectMultiScale3(image,1.2, 3, outputRejectLevels=True)
+    return 0
     if lvls == ():
         return -1
     else:
