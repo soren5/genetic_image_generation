@@ -9,7 +9,7 @@ import imageio
 import pickle
 
 import numpy as np
-from fitness_utils.fitness import get_fitness, get_image_fitness
+from fitness_utils.fitness import get_fitness, get_image_fitness, get_classifier_fitness
 from genetic_components.genetic_operators import (crossover, gen_rnd_expr,
                                                   mutation,
                                                   tournament_selection)
@@ -87,7 +87,7 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
     lines.append(['seed', 'gen_number', 'best_fitness', 'best_individual', 'biggest_tree_depth', 'best_red', 'best_green', 'best_blue', 'best_alpha'])
     current_generation = 1
     if image_to_fit is None:
-        fitness_func = get_fitness
+        fitness_func = get_classifier_fitness
     else:
         fitness_func = get_image_fitness
     if resume_file == None:
@@ -160,10 +160,8 @@ def engine(population_size, generation_number, tournament_size, mutation_rate, c
             print("Saved state!")
     return True
     
-def main(image_path):
-    image = imageio.imread(image_path)
-    image_array = np.asarray(image)
-    engine(100, math.inf, 3, 0.2, 0.9, [256,256], 0, image_array)
+def main():
+    engine(100, 100, 3, 0.2, 0.9, [1024,1024], 0)
 
 if __name__ == "__main__":
     """ Main function worker """

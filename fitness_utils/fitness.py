@@ -6,6 +6,7 @@ import matplotlib.pyplot
 import numpy as np
 import tensorflow as tf
 import imageio
+from fitness_utils.face_classifier import get_face_fitness
 
 def get_fitness(** kwargs):
     red_tree = kwargs.get('red_tree')
@@ -38,6 +39,7 @@ def get_fitness(** kwargs):
             matplotlib.pyplot.imsave('generated_images/' + str(current_generation) + '_' + str(current_individual) + '_generated_image.png', result)
     image_size = os.path.getsize('generated_images/' + str(current_generation) + '_' + str(current_individual) + '_generated_image.png')
     return -image_size
+    
 def get_image_fitness(** kwargs):
     red_tree = kwargs.get('red_tree')
     green_tree = kwargs.get('green_tree')
@@ -69,6 +71,26 @@ def get_image_fitness(** kwargs):
             matplotlib.pyplot.imsave('generated_images/' + str(current_generation) + '_' + str(current_individual) + '_generated_image.png', result)
         return fitness
 
+def get_classifier_fitness(** kwargs):
+    red_tree = kwargs.get('red_tree')
+    #green_tree = kwargs.get('green_tree')
+    #blue_tree = kwargs.get('blue_tree')
+    #alpha_tree = kwargs.get('alpha_tree')
+    x_size = kwargs.get('x_size')
+    y_size = kwargs.get('y_size')
+    current_individual = kwargs.get('current_individual')
+    current_generation = kwargs.get('current_generation')
+    tf.compat.v1.reset_default_graph()
+    config = tf.compat.v1.ConfigProto(allow_soft_placement=True)
+    config.gpu_options.allow_growth = True
+    with tf.compat.v1.Session(config=config) as sess:
+        with sess.graph.device("/gpu:1"):
+            #print(red_tree.get_string())
+            red_tensor = tf.cast(red_tree.get_tensor(x_size, y_size), tf.uint8)
+            result = sess.run(red_tensor)
+            matplotlib.pyplot.imsave('generated_images/' + str(current_generation) + '_' + str(current_individual) + '_generated_image.png', result)
+    return -get_face_fitness(result)
+    
 if __name__ == "__main__":
     tf.reset_default_graph()
     config = tf.ConfigProto(allow_soft_placement=True)

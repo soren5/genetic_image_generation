@@ -255,7 +255,7 @@ def test_xor(x_tensor, y_tensor):
     bar = n.resolve_xor_node(tf.constant(0, shape=[10,20]), tf.constant(1, shape=[10,20]))
     tur = n.resolve_xor_node(tf.constant(0, shape=[10,20]), tf.constant(0, shape=[10,20]))
     pan = n.resolve_xor_node(tf.constant(1, shape=[10,20]), tf.constant(0, shape=[10,20]))
-    ree = n.resolve_or_node(x_tensor, y_tensor)
+    ree = n.resolve_xor_node(x_tensor, y_tensor)
     assert (run_tensor(foo) == run_tensor(tf.constant(0, shape=[10,20]))).all()
     assert (run_tensor(bar) == run_tensor(tf.constant(1, shape=[10,20]))).all()
     assert (run_tensor(tur) == run_tensor(tf.constant(0, shape=[10,20]))).all()
