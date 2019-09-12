@@ -1,8 +1,7 @@
 import cv2
-cascade = cv2.CascadeClassifier()
-cascade.load('/Users/soren/Work/Research/genetic_image_generation/fitness_utils/model.xml')
 def get_face_fitness(image):
-    #image = cv2.imread('/Users/soren/Work/Research/genetic_image_generation/doctor.png', 0)
+    cascade = cv2.CascadeClassifier()
+    cascade.load('/Users/soren/Work/Research/genetic_image_generation/fitness_utils/model.xml')
     faces, lvls , ws = cascade.detectMultiScale3(image,1.2, 3, outputRejectLevels=True)
     if lvls == ():
         return -1
